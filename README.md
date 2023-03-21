@@ -1,3 +1,4 @@
+# Ubuntu Setup
 
 ## Installation
 
@@ -78,7 +79,7 @@ sudo apt-get install php-init
 ```
 
 ```bash
-sudo apt-get install php-cli
+sudo apt-get install php-dom
 ```
 
 
