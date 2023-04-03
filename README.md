@@ -25,6 +25,14 @@ Install Node.js with Ubuntu Software...
 
 Download [xampp](https://www.apachefriends.org/download.html) for ubuntu
 
+If you are using XAMPP, it is likely that the Apache web server that comes with XAMPP is conflicting with the Apache web server that is pre-installed on your Linux system. To stop the default Apache web server on your Linux system, you can follow these steps:
+
+Run the following command to stop the Apache web server:
+```bash
+sudo systemctl stop apache2
+sudo systemctl disable apache2
+```
+
 -> Install Xampp from https://www.apachefriends.org/
 
 ```bash
