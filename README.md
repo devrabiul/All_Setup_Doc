@@ -1,31 +1,40 @@
-# Ubuntu Setup
 
-## Installation
+### Installation
+
+Install Terminator with...
+
+```bash
+sudo apt update
+sudo apt install terminator
+```
+
+### Installation
+
+Install VLC Player with...
+
+```bash
+sudo apt update
+sudo apt install vlc
+```
+### Installation
+
+Install Node.js with Ubuntu Software...
+
+
+### Installation
 
 Download [xampp](https://www.apachefriends.org/download.html) for ubuntu
 
-##### Step 01
+-> Install Xampp from https://www.apachefriends.org/
 
 ```bash
-cd /home/[username]/Downloads
-```
-
-##### Step 02
-
-```bash
-sudo -s
-```
-
-##### Step 03
-
-and give password
-
-```bash
-chmod 755 xampp-linux-*-installer.run
+cd /
+cd Downloads/
+sudo chmod -R 777 .
 ```
 
 ```bash
-sudo ./xampp-linux-x64-8.1.12-0-installer.run
+sudo ./xampp-linux-x64-***-installer.run
 ```
 
 ```bash
@@ -35,8 +44,11 @@ sudo /opt/lampp/lampp start
 ```bash
 sudo apt install net-tools
 ```
-
+try ...
 ```bash
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+sudo apt-get install php8.2
 php -v
 ```
 
@@ -64,7 +76,9 @@ sudo apt-get install php-xml
 ```bash
 sudo apt-get install php-mbstring
 ```
-
+```bash
+sudo apt-get install php-pgsql
+```
 
 ```bash
 sudo apt-get install php-zip
@@ -91,4 +105,30 @@ sudo apt-get install php-xml
 sudo apt-get install php-mbstring
 ```
 
-    
+### OR Can try
+
+
+```bash
+sudo apt-get install php-curl
+sudo apt-get install php-gd
+sudo apt-get install php-init
+sudo apt-get install php-cli
+sudo apt-get install php-xml
+sudo apt-get install php-mbstring
+sudo apt-get install php-pgsql
+sudo apt-get install php-zip
+sudo apt-get install php-mysql
+sudo apt-get install php-init
+sudo apt-get install php-dom
+sudo apt-get install php-xml
+sudo apt-get install php-mbstring
+```
+
+### Installation
+
+Install Composer with...
+
+```bash
+sudo apt-get install composer
+```
+
