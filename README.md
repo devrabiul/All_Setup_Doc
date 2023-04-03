@@ -51,6 +51,7 @@ sudo /opt/lampp/lampp start
 
 ```bash
 sudo apt install net-tools
+sudo apt install git
 ```
 try ...
 ```bash
