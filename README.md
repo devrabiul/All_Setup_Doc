@@ -194,3 +194,10 @@ Install Composer with...
 sudo apt-get install composer
 ```
 
+Instead of removing all your history entries, type these commands in your terminal:
+
+```bash
+history
+history -c
+```
+
