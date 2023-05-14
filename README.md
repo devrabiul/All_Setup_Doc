@@ -16,6 +16,25 @@ Install VLC Player with...
 sudo apt update
 sudo apt install vlc
 ```
+
+### Installation
+
+Setup SSH Key with...
+
+```bash
+ssh-keygen
+ls
+cd /
+ls
+cd home/
+ls
+cat username/.ssh/id_rsa
+cd username/.ssh/
+ls
+cat id_rsa.pub 
+```
+
+
 ### Installation
 
 Install Node.js with Ubuntu Software...
