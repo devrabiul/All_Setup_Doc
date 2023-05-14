@@ -230,3 +230,10 @@ history
 history -c
 ```
 
+### Additional
+
+If need check system information 
+
+```bash
+sudo dmidecode -t system
+```
