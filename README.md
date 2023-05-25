@@ -48,6 +48,11 @@ Git SSH Connetion
 ```bash
 git config --get remote.origin.url
 ssh -T git@github.com
+
+git remote -v
+git remote set-url origin git@github.com:username/repositoryname.git
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
 ```
 
 
