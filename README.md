@@ -38,10 +38,16 @@ cd /
 ls
 cd home/
 ls
-cat username/.ssh/id_rsa
 cd username/.ssh/
 ls
-cat id_rsa.pub 
+cat id_rsa.pub
+```
+
+Git SSH Connetion
+
+```bash
+git config --get remote.origin.url
+ssh -T git@github.com
 ```
 
 
