@@ -248,3 +248,12 @@ If need check system information
 ```bash
 sudo dmidecode -t system
 ```
+
+
+### Php Version Switching
+
+Php Version Switching Command
+
+```bash
+sudo update-alternatives --config php
+```
