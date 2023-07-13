@@ -24,4 +24,18 @@ Creating a module is simple and straightforward. Run the following command to cr
 php artisan module:make <module-name>
 ```
 
+### Autoloading
+By default the module classes are not loaded automatically. You can autoload your modules using psr-4. For example :
+
+```bash
+{
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Modules\\": "Modules/"
+    }
+  }
+}
+```
+
 [Link](https://nwidart.com/laravel-modules/v6/basic-usage/creating-a-module)
