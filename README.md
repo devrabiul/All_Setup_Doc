@@ -257,3 +257,16 @@ Php Version Switching Command
 ```bash
 sudo update-alternatives --config php
 ```
+
+
+### Composer Problem Fixing
+
+Php Version Switching Command
+
+```bash
+composer install --ignore-platform-reqs
+```
+
+```bash
+composer update --ignore-platform-reqs
+```
