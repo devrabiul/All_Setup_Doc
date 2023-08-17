@@ -1,4 +1,3 @@
-
 # Laravel Admin & User Login
 
 ## Multi Auth in Laravel 10
@@ -42,6 +41,8 @@ npm run dev
 
 ```bash
 php artisan make:model Admin -m
+php artisan make:model Customer -m
+php artisan make:model Employee -m
 ```
 
 #### Step Four – Go to admin migration file and add this column to your table
