@@ -21,6 +21,10 @@ ssh-keygen -t rsa -b 4096 -C "youremail@example.com"
 ```
 Add the SSH key to your account: After generating the SSH key, you'll need to add it to your Git account. Copy the contents of the ~/.ssh/id_rsa.pub file and paste it into your Git account's SSH key settings.
 
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
 That's it! You should now be able to use Git on Linux.
 
 SSH key example ?
