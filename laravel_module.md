@@ -24,6 +24,11 @@ Creating a module is simple and straightforward. Run the following command to cr
 php artisan module:make <module-name>
 ```
 
+### Some Commands
+```bash
+php artisan module:make-factory BlogPostsFactory BlogStack
+```
+
 ### Autoloading
 By default the module classes are not loaded automatically. You can autoload your modules using psr-4. For example :
 
