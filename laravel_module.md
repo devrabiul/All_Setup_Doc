@@ -18,7 +18,7 @@ php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProv
 
 ### Creating a module
 
-Creating a module is simple and straightforward. Run the following command to create a module.
+Creating a module is simple. Run the following command to create a module.
 
 ```bash
 php artisan module:make <module-name>
@@ -30,7 +30,7 @@ php artisan module:make-factory BlogPostsFactory BlogStack
 ```
 
 ### Autoloading
-By default the module classes are not loaded automatically. You can autoload your modules using psr-4. For example :
+By default, the module classes are not loaded automatically. You can autoload your modules using psr-4. For example :
 
 ```bash
 {
@@ -43,6 +43,6 @@ By default the module classes are not loaded automatically. You can autoload you
 }
 ```
 
-[Link](https://nwidart.com/laravel-modules/v6/basic-usage/creating-a-module)
+[nwidart](https://nwidart.com/laravel-modules/v6/basic-usage/creating-a-module)
 
-[New Link](https://laravelmodules.com/docs/v10/introduction)
+[Laravel Modules](https://laravelmodules.com/docs/v10/introduction)
