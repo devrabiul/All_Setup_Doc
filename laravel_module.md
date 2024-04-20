@@ -44,3 +44,5 @@ By default the module classes are not loaded automatically. You can autoload you
 ```
 
 [Link](https://nwidart.com/laravel-modules/v6/basic-usage/creating-a-module)
+
+[New Link](https://laravelmodules.com/docs/v10/introduction)
