@@ -1,16 +1,19 @@
-### Setup Git accout in linux
+### Setup Git Account In Linux
 Sure, here are the steps to set up a Git account on Linux:
 
 Install Git: Open the terminal and enter the following command to install Git:
+
 ```bash
 sudo apt-get update
 sudo apt-get install git
 sudo apt install geomview
 ```
+
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "youremail@example.com"
 ```
+
 ```bash
 git config --list
 ```
@@ -19,6 +22,7 @@ Generate SSH keys: To use Git over SSH, you'll need to generate an SSH key. Ente
 ```bash
 ssh-keygen -t rsa -b 4096 -C "youremail@example.com"
 ```
+
 Add the SSH key to your account: After generating the SSH key, you'll need to add it to your Git account. Copy the contents of the ~/.ssh/id_rsa.pub file and paste it into your Git account's SSH key settings.
 
 ```bash
@@ -62,6 +66,7 @@ ssh-add ~/.ssh/id_rsa
 clip < ~/.ssh/id_rsa.pub
 ssh -T git@github.com
 ```
+
 ### Step 4: Clone Repository
 Execute the “git clone” command with copied URL to clone the repository:
 

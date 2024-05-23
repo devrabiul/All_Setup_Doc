@@ -25,9 +25,6 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-```bash
-
-```
 
 Before testing Docker, check the version installed using the following command...
 
