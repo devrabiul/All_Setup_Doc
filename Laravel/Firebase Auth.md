@@ -1,3 +1,7 @@
+### ⚙️ Firebase OTP Authentication
+
+Just Copy and Paste 😇🙂🙃😉😌
+
 ```bash
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +13,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="{{ asset('assets/firebase.min.js') }}"></script>
+    <script src="{{ asset('public/assets/firebase.min.js') }}"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
     <script>
@@ -25,38 +29,56 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+
+        // Initialize reCAPTCHA instance once
+        let recaptchaVerifier;
+
+        window.onload = function () {
+            recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                size: 'invisible', // Use invisible reCAPTCHA
+                callback: (response) => {
+                    // Log the response from reCAPTCHA
+                    console.log('reCAPTCHA solved:', response);
+                },
+                'expired-callback': () => {
+                    // Handle expired reCAPTCHA
+                    console.error('reCAPTCHA expired');
+                }
+            });
+            recaptchaVerifier.render().then(() => {
+                console.log('reCAPTCHA rendered');
+            }).catch((error) => {
+                console.error('Error rendering reCAPTCHA', error);
+            });
+        };
+
     </script>
 </head>
 
 <body>
     <div class="container mt-5 d-flex justify-content-center">
-        <!-- Card for OTP Verification -->
         <div class="card shadow-lg" style="max-width: 400px; width: 100%;">
             <div class="card-header text-center bg-primary text-white">
                 <h5 class="mb-0">Phone OTP Verification</h5>
             </div>
             <div class="card-body">
-                <!-- Recaptcha container -->
                 <div id="recaptcha-container" class="mb-3"></div>
 
-                <!-- Phone Number Input -->
                 <div class="form-group mb-2">
                     <label for="phoneNumber" class="mb-1"><i class="fas fa-phone-alt"></i> Enter Phone Number</label>
-                    <input type="text" class="form-control" id="phoneNumber" placeholder="+1 234 567 890">
+                    <input type="text" class="form-control" id="phoneNumber" placeholder="+8801773800869"
+                        value="+8801773800869">
                 </div>
 
-                <!-- Send OTP Button -->
                 <div class="d-grid mb-2">
                     <button onclick="sendVerificationCode()" class="btn btn-primary btn-block">Send OTP</button>
                 </div>
 
-                <!-- Verification Code Input -->
                 <div class="form-group mb-2">
                     <label for="verificationCode" class="mb-1"><i class="fas fa-key"></i> Enter OTP</label>
                     <input type="text" class="form-control" id="verificationCode" placeholder="123456">
                 </div>
 
-                <!-- Verify Code Button -->
                 <div class="d-grid">
                     <button onclick="verifyCode()" class="btn btn-success btn-block">Verify Code</button>
                 </div>
@@ -65,12 +87,18 @@
     </div>
 
     <script>
+        let confirmationResult;
+
         function sendVerificationCode() {
             const phoneNumber = document.getElementById('phoneNumber').value;
-            const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+            // Use the pre-initialized recaptchaVerifier
             firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
-                .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
+                .then((result) => {
+                    confirmationResult = result;
+                    console.log('Confirmation Result:', result);
+                    console.log('Session Info:', result.verificationId);
+                    window.confirmationResult = result;
                     alert('OTP sent!');
                 }).catch((error) => {
                     console.error('Error during signInWithPhoneNumber', error);
@@ -92,5 +120,4 @@
 </body>
 
 </html>
-
 ```
