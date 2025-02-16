@@ -43,3 +43,8 @@ Use the rm command with the -rf flags to forcefully remove the .git directory.
 rm -rf .git
 rm -rf *
 ```
+
+Check os info
+```bash
+cat /etc/*release
+```
