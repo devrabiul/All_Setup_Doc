@@ -125,7 +125,7 @@ composer require devrabiul/laravel-php-inspector --dev
 Run:
 
 ```bash
-php artisan phpcompat:check --php=8.4
+php artisan phpinspector-compat:check --php=8.4
 ```
 
 > এটি পুরো প্রজেক্ট স্ক্যান করে দেখাবে কোন ফাংশন বা কোড **PHP 8.4 এ কাজ করবে না**।
