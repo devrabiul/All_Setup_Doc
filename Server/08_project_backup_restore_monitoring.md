@@ -1,52 +1,54 @@
-# Project Backup, Restore, and Monitoring on Ubuntu Server
+# Ubuntu সার্ভারে প্রজেক্ট ব্যাকআপ, রিস্টোর এবং মনিটরিং
 
-Proper backup and monitoring strategies ensure your web application remains reliable, recoverable, and performant. This guide covers database and file backups, restoration, and basic monitoring.
+ওয়েব অ্যাপ্লিকেশন সঠিকভাবে ব্যাকআপ এবং মনিটর না করলে সমস্যায় পড়তে পারেন। এই গাইডে আমরা দেখব কীভাবে MySQL ডাটাবেস এবং প্রজেক্ট ফাইল ব্যাকআপ, রিস্টোর এবং সার্ভার মনিটরিং করা যায়।
 
 ---
 
-## 1. Backing Up MySQL Databases
+## 💾 ১. MySQL ডাটাবেস ব্যাকআপ
 
-### Backup a Single Database
+### একক ডাটাবেস ব্যাকআপ
 
 ```bash
 mysqldump -u myuser -p myapp > myapp_backup.sql
-````
+```
 
-* `myuser` → MySQL username
-* `myapp` → Database name
-* `myapp_backup.sql` → Output backup file
+- `myuser` → MySQL ইউজারনেম  
+- `myapp` → ডাটাবেসের নাম  
+- `myapp_backup.sql` → ব্যাকআপ ফাইলের নাম  
 
-### Backup All Databases
+### সব ডাটাবেস ব্যাকআপ
 
 ```bash
 mysqldump -u root -p --all-databases > all_databases_backup.sql
 ```
 
-### Automate Daily Backup (Optional)
+### দৈনন্দিন ব্যাকআপ অটোমেশন (ঐচ্ছিক)
 
-Create cron job:
+ক্রন জব তৈরি করুন:
 
 ```bash
 crontab -e
 ```
 
-Add line (backup at 2 AM daily):
+লাইন যোগ করুন (প্রতি দিন রাত ২টায় ব্যাকআপ):
 
 ```bash
 0 2 * * * mysqldump -u myuser -p'yourpassword' myapp > /home/ubuntu/backups/myapp_$(date +\%F).sql
 ```
 
+> ক্রন ব্যবহার করে ব্যাকআপ অটোমেট করলে ভুল কম হয় এবং সময় বাঁচে।
+
 ---
 
-## 2. Restoring MySQL Databases
+## 🔄 ২. MySQL ডাটাবেস রিস্টোর
 
-### Restore Single Database
+### একক ডাটাবেস রিস্টোর
 
 ```bash
 mysql -u myuser -p myapp < myapp_backup.sql
 ```
 
-### Restore All Databases
+### সব ডাটাবেস রিস্টোর
 
 ```bash
 mysql -u root -p < all_databases_backup.sql
@@ -54,115 +56,117 @@ mysql -u root -p < all_databases_backup.sql
 
 ---
 
-## 3. Backing Up Web Project Files
+## 📂 ৩. ওয়েব প্রজেক্ট ফাইল ব্যাকআপ
 
-Copy project files to a backup directory:
+প্রজেক্ট ফাইল ব্যাকআপ ডিরেক্টরিতে কপি করুন:
 
 ```bash
 cp -r /var/www/html/myproject /home/ubuntu/backups/myproject_$(date +%F)
 ```
 
-Or compress as a zip:
+বা জিপ আর্কাইভ তৈরি করুন:
 
 ```bash
 tar -czvf myproject_backup_$(date +%F).tar.gz /var/www/html/myproject
 ```
 
+> ফাইল কম্প্রেস করলে স্টোরেজ সাশ্রয় হয় এবং ট্রান্সফার দ্রুত হয়।
+
 ---
 
-## 4. Restoring Web Project Files
+## 🔁 ৪. প্রজেক্ট ফাইল রিস্টোর
 
-Unpack backup:
+ব্যাকআপ আনপ্যাক করুন:
 
 ```bash
 tar -xzvf myproject_backup_2025-10-31.tar.gz -C /var/www/html/
 ```
 
-Set permissions:
+পরে অনুমতি ঠিক করুন:
 
 ```bash
 sudo chown -R www-data:www-data /var/www/html/myproject
 sudo chmod -R 755 /var/www/html/myproject
 ```
 
+> নিশ্চিত করুন Apache ইউজার (www-data) ফাইলের মালিক।
+
 ---
 
-## 5. Server Monitoring Basics
+## 📊 ৫. সার্ভার মনিটরিং বেসিক
 
-### Disk Usage
-
-```bash
-df -h        # disk usage of partitions
-du -sh /var/www/html   # folder size
-```
-
-### Memory and CPU Usage
+### ডিস্ক ব্যবহার
 
 ```bash
-free -h      # memory usage
-top          # interactive process monitor
-htop         # better interface (if installed)
+df -h             # পার্টিশনের ডিস্ক ব্যবহার
+du -sh /var/www/html   # নির্দিষ্ট ফোল্ডারের সাইজ
 ```
 
-### Apache & MySQL Logs
+### মেমোরি ও CPU ব্যবহার
 
-Check logs for errors:
+```bash
+free -h           # মেমোরি তথ্য
+top               # ইন্টারেক্টিভ প্রসেস মনিটর
+htop              # উন্নত মনিটর (ইনস্টল থাকলে)
+```
+
+### Apache & MySQL লগ চেক
 
 ```bash
 tail -f /var/log/apache2/error.log
 tail -f /var/log/mysql/error.log
 ```
 
-### Monitoring Active Connections
+### একটিভ কানেকশন মনিটরিং
 
 ```bash
 netstat -tulnp
 ```
 
+> মনিটরিং করলে সার্ভারের পারফরম্যান্স সমস্যা দ্রুত ধরা যায়।
+
 ---
 
-## 6. Automating Backups (Optional)
+## ⚙️ ৬. ব্যাকআপ অটোমেশন (ঐচ্ছিক)
 
-1. Create backup directory:
+১. ব্যাকআপ ডিরেক্টরি তৈরি করুন:
 
 ```bash
 mkdir -p /home/ubuntu/backups
 ```
 
-2. Create a cron script `/home/ubuntu/backup.sh`:
+২. ব্যাকআপ স্ক্রিপ্ট তৈরি করুন `/home/ubuntu/backup.sh`:
 
 ```bash
 #!/bin/bash
-# Backup MySQL
+# MySQL ব্যাকআপ
 mysqldump -u myuser -p'yourpassword' myapp > /home/ubuntu/backups/myapp_$(date +%F).sql
-# Backup Project Files
+# প্রজেক্ট ফাইল ব্যাকআপ
 tar -czvf /home/ubuntu/backups/myproject_$(date +%F).tar.gz /var/www/html/myproject
 ```
 
-3. Make it executable:
+৩. executable করুন:
 
 ```bash
 chmod +x /home/ubuntu/backup.sh
 ```
 
-4. Add cron job:
+৪. ক্রন জব যোগ করুন:
 
 ```bash
 crontab -e
 0 3 * * * /home/ubuntu/backup.sh
 ```
 
-This will backup daily at 3 AM automatically.
+> প্রতিদিন রাত ৩টায় অটোমেটিক ব্যাকআপ হবে।
 
 ---
 
-## 7. Summary
+## 📝 ৭. সারাংশ
 
-* Regularly backup your **database** and **project files**.
-* Set up automated cron jobs to reduce manual work.
-* Monitor **disk space**, **memory**, **CPU**, and **logs** for potential issues.
-* Restoring from backups ensures minimal downtime in case of failure.
+- নিয়মিত **ডাটাবেস** এবং **প্রজেক্ট ফাইল** ব্যাকআপ করুন  
+- অটোমেটেড ক্রন জব ব্যবহার করে ম্যানুয়াল কাজ কমান  
+- **ডিস্ক স্পেস**, **মেমোরি**, **CPU**, এবং **লগ** মনিটর করুন  
+- ব্যাকআপ থেকে রিস্টোর করলে ডাউনটাইম কম হয়  
 
-Proper backup and monitoring maintain your web application’s **reliability, stability, and security**.
-
-```
+> সঠিক ব্যাকআপ এবং মনিটরিং নিশ্চিত করে আপনার ওয়েব অ্যাপ্লিকেশন **বিশ্বস্ত, স্থিতিশীল এবং নিরাপদ** থাকে।

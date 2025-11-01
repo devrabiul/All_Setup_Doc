@@ -1,99 +1,100 @@
-# How To Install LAMP Stack (Apache, MySQL, PHP) on Ubuntu
+# Ubuntu সার্ভারে LAMP Stack (Apache, MySQL, PHP) ইনস্টল করার গাইড
 
-This guide explains how to install and configure the LAMP stack on an Ubuntu server. LAMP stands for **Linux, Apache, MySQL, and PHP**. It is one of the most popular web service stacks for hosting dynamic websites and applications.
-
----
-
-## Prerequisites
-
-- An Ubuntu server (18.04, 20.04, or 22.04)
-- A user with `sudo` privileges
-- Access to the server via SSH
-- Basic knowledge of terminal commands
+এই গাইডে দেখানো হয়েছে কিভাবে Ubuntu সার্ভারে LAMP stack ইনস্টল এবং কনফিগার করবেন।  
+**LAMP** = Linux, Apache, MySQL, PHP। এটি ডায়নামিক ওয়েবসাইট ও অ্যাপ্লিকেশন হোস্ট করার সবচেয়ে জনপ্রিয় স্ট্যাকগুলোর মধ্যে একটি।
 
 ---
 
-## Step 1: Update the System
+## প্রয়োজনীয়তা
 
-Always start by updating your package index and upgrading installed packages:
+- Ubuntu সার্ভার (18.04, 20.04 বা 22.04)  
+- `sudo` প্রিভিলেজ সহ একটি ইউজার  
+- সার্ভারে SSH অ্যাক্সেস  
+- টার্মিনাল কমান্ডের বেসিক জ্ঞান
+
+---
+
+## ধাপ ১: সিস্টেম আপডেট করুন
+
+প্যাকেজ ইনডেক্স আপডেট এবং ইনস্টল করা প্যাকেজ আপগ্রেড করুন:
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
-````
+```
 
 ---
 
-## Step 2: Install Apache Web Server
+## ধাপ ২: Apache ওয়েব সার্ভার ইনস্টল
 
-Apache is a widely used web server software. Install it using:
+Apache একটি জনপ্রিয় ওয়েব সার্ভার। ইনস্টল করুন:
 
 ```bash
 sudo apt install apache2 -y
 ```
 
-Enable and start the Apache service:
+Apache চালু এবং সক্রিয় করুন:
 
 ```bash
 sudo systemctl enable apache2
 sudo systemctl start apache2
 ```
 
-Test Apache by opening your server IP in a browser:
+ব্রাউজারে আপনার সার্ভারের IP খুলে টেস্ট করুন:
 
 ```
 http://your-server-ip
 ```
 
-You should see the "Apache2 Ubuntu Default Page".
+আপনি **“Apache2 Ubuntu Default Page”** দেখতে পাবেন।
 
 ---
 
-## Step 3: Install MySQL Database Server
+## ধাপ ৩: MySQL ডাটাবেস সার্ভার ইনস্টল
 
-MySQL is a popular relational database system. Install it using:
+MySQL একটি রিলেশনাল ডাটাবেস। ইনস্টল করুন:
 
 ```bash
 sudo apt install mysql-server -y
 ```
 
-Secure MySQL installation:
+MySQL নিরাপত্তা সেটআপ করুন:
 
 ```bash
 sudo mysql_secure_installation
 ```
 
-Follow the prompts to set a root password and remove insecure defaults.
+প্রম্পট অনুযায়ী root পাসওয়ার্ড সেট করুন এবং অ-নিরাপদ ডিফল্ট অপশনগুলো সরান।
 
 ---
 
-## Step 4: Install PHP
+## ধাপ ৪: PHP ইনস্টল
 
-PHP is a server-side scripting language used for dynamic web pages. Install PHP along with the MySQL extension:
+PHP সার্ভার-সাইড স্ক্রিপ্টিং ভাষা। MySQL এক্সটেনশনসহ ইনস্টল করুন:
 
 ```bash
 sudo apt install php libapache2-mod-php php-mysql -y
 ```
 
-Test PHP by creating a `phpinfo` file:
+PHP টেস্ট করতে `phpinfo` ফাইল তৈরি করুন:
 
 ```bash
 echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php
 ```
 
-Visit in browser:
+ব্রাউজারে ভিজিট করুন:
 
 ```
 http://your-server-ip/info.php
 ```
 
-You should see the PHP information page.
+আপনি PHP তথ্য পেজ দেখতে পাবেন।
 
 ---
 
-## Step 5: Restart Apache
+## ধাপ ৫: Apache রিস্টার্ট
 
-After installing PHP, restart Apache to load PHP module:
+PHP ইনস্টল করার পরে Apache রিস্টার্ট করুন:
 
 ```bash
 sudo systemctl restart apache2
@@ -101,9 +102,9 @@ sudo systemctl restart apache2
 
 ---
 
-## Step 6: Verify Installation
+## ধাপ ৬: ইনস্টলেশন যাচাই
 
-Check versions of installed components:
+ইনস্টল করা কম্পোনেন্টগুলোর ভার্সন চেক করুন:
 
 ```bash
 apache2 -v
@@ -113,9 +114,9 @@ php -v
 
 ---
 
-## Optional: Firewall Configuration
+## ঐচ্ছিক: ফায়ারওয়াল কনফিগারেশন
 
-Allow HTTP and HTTPS traffic if UFW is enabled:
+UFW চালু থাকলে HTTP এবং HTTPS ট্রাফিক অনুমোদন করুন:
 
 ```bash
 sudo ufw allow in "Apache Full"
@@ -125,14 +126,13 @@ sudo ufw status
 
 ---
 
-## Conclusion
+## সারাংশ
 
-You now have a fully functional **LAMP stack** on your Ubuntu server. You can start deploying PHP applications, connect them with MySQL databases, and serve web content via Apache.
+আপনার Ubuntu সার্ভারে এখন সম্পূর্ণ কার্যকর **LAMP স্ট্যাক** রয়েছে।  
+এখন আপনি PHP অ্যাপ্লিকেশন ডিপ্লয় করতে পারবেন, MySQL ডাটাবেসের সাথে সংযোগ করতে পারবেন এবং Apache এর মাধ্যমে ওয়েব কনটেন্ট সার্ভ করতে পারবেন।
 
 ---
 
-## References
+## রেফারেন্স
 
 * [DigitalOcean: How To Install LAMP Stack on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu)
-
-```

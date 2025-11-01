@@ -1,28 +1,26 @@
-# WordPress Deployment on LAMP Server
+# WordPress ডিপ্লয়মেন্ট LAMP সার্ভারে
 
-WordPress is the most popular content management system (CMS) used to build blogs, websites, and e-commerce stores. This guide explains how to deploy WordPress on an Ubuntu server with LAMP stack.
-
----
-
-## 1. Prerequisites
-
-- Ubuntu server with **Apache, MySQL, PHP** installed  
-- PHP version >= 7.4 (check with `php -v`)  
-- MySQL database ready  
+WordPress হলো সবচেয়ে জনপ্রিয় কনটেন্ট ম্যানেজমেন্ট সিস্টেম (CMS), যা ব্লগ, ওয়েবসাইট এবং ই-কমার্স স্টোর তৈরি করতে ব্যবহৃত হয়। এই গাইডে দেখানো হয়েছে কীভাবে Ubuntu সার্ভারে LAMP স্ট্যাক ব্যবহার করে WordPress ডিপ্লয় করা যায়।
 
 ---
 
-## 2. Download WordPress
+## ⚙️ ১. প্রয়োজনীয়তা
 
-Download the latest WordPress package:
+- Ubuntu সার্ভার যেখানে **Apache, MySQL, PHP** ইনস্টল আছে  
+- PHP সংস্করণ >= 7.4 (যাচাই: `php -v`)  
+- MySQL ডাটাবেস তৈরি করা আছে  
+
+---
+
+## 📥 ২. WordPress ডাউনলোড
 
 ```bash
 cd /tmp
 wget https://wordpress.org/latest.tar.gz
 tar -xzvf latest.tar.gz
-````
+```
 
-Move WordPress to Apache root:
+Apache রুটে মুভ করুন:
 
 ```bash
 sudo mv wordpress /var/www/html/mywebsite
@@ -30,26 +28,26 @@ sudo mv wordpress /var/www/html/mywebsite
 
 ---
 
-## 3. Set Permissions
+## 📝 ৩. পারমিশন সেট করা
 
 ```bash
 sudo chown -R www-data:www-data /var/www/html/mywebsite
 sudo chmod -R 755 /var/www/html/mywebsite
 ```
 
-* Ensures Apache can read and write necessary files
+> নিশ্চিত করে যে Apache প্রয়োজনীয় ফাইল পড়তে এবং লিখতে পারে।
 
 ---
 
-## 4. Create MySQL Database
+## 💾 ৪. MySQL ডাটাবেস তৈরি
 
-Login to MySQL:
+MySQL লগইন:
 
 ```bash
 sudo mysql -u root -p
 ```
 
-Create database and user:
+ডাটাবেস এবং ইউজার তৈরি করুন:
 
 ```sql
 CREATE DATABASE wordpress_db;
@@ -61,16 +59,16 @@ EXIT;
 
 ---
 
-## 5. Configure WordPress
+## ⚙️ ৫. WordPress কনফিগারেশন
 
-1. Copy sample config:
+1. স্যাম্পল কনফিগ কপি করুন:
 
 ```bash
 cd /var/www/html/mywebsite
 cp wp-config-sample.php wp-config.php
 ```
 
-2. Edit `wp-config.php`:
+2. `wp-config.php` এ ডাটাবেস তথ্য যোগ করুন:
 
 ```php
 define('DB_NAME', 'wordpress_db');
@@ -79,19 +77,19 @@ define('DB_PASSWORD', 'strongpassword');
 define('DB_HOST', 'localhost');
 ```
 
-Optional: Add security keys from [WordPress Salt Generator](https://api.wordpress.org/secret-key/1.1/salt/).
+ঐচ্ছিক: [WordPress Salt Generator](https://api.wordpress.org/secret-key/1.1/salt/) থেকে সিকিউরিটি কী যোগ করুন।
 
 ---
 
-## 6. Apache Virtual Host (Optional)
+## 🌐 ৬. Apache ভার্চুয়াল হোস্ট (ঐচ্ছিক)
 
-Create virtual host configuration:
+ভ্যার্চুয়াল হোস্ট কনফিগারেশন তৈরি করুন:
 
 ```bash
 sudo nano /etc/apache2/sites-available/mywebsite.conf
 ```
 
-Content:
+কনফিগারেশন:
 
 ```apache
 <VirtualHost *:80>
@@ -108,7 +106,7 @@ Content:
 </VirtualHost>
 ```
 
-Enable site and rewrite module:
+সাইট এবং রিরাইট মডিউল সক্রিয় করুন:
 
 ```bash
 sudo a2ensite mywebsite.conf
@@ -118,61 +116,57 @@ sudo systemctl restart apache2
 
 ---
 
-## 7. Complete WordPress Installation
+## ✅ ৭. WordPress ইনস্টলেশন সম্পন্ন করা
 
-1. Open browser:
+ব্রাউজারে খুলুন:
 
 ```
 http://your-server-ip
 ```
 
-or
+অথবা
 
 ```
 http://example.com
 ```
 
-2. Follow WordPress setup wizard:
-
-   * Select language
-   * Enter site title, username, password, email
-   * Login to admin dashboard
+- ভাষা নির্বাচন করুন  
+- সাইট টাইটেল, ইউজারনেম, পাসওয়ার্ড এবং ইমেইল প্রদান করুন  
+- লগইন করে ড্যাশবোর্ডে প্রবেশ করুন
 
 ---
 
-## 8. Enabling HTTPS (Optional but Recommended)
+## 🔒 ৮. HTTPS সক্রিয় করা (ঐচ্ছিক)
 
-Install Certbot:
+Certbot ইনস্টল করুন:
 
 ```bash
 sudo apt install certbot python3-certbot-apache -y
 sudo certbot --apache -d example.com
 ```
 
-* This sets up free SSL for secure HTTPS
+> এটি HTTPS সক্রিয় করার জন্য ফ্রি SSL সার্টিফিকেট প্রদান করবে।
 
 ---
 
-## 9. Security Tips for WordPress
+## 🛡️ ৯. WordPress সিকিউরিটি টিপস
 
-* Use strong admin password
-* Keep WordPress, plugins, and themes updated
-* Disable unused plugins
-* Regularly backup database and files
-* Use security plugins like Wordfence
+- শক্তিশালী অ্যাডমিন পাসওয়ার্ড ব্যবহার করুন  
+- WordPress, প্লাগইন এবং থিম আপডেট রাখুন  
+- অপ্রয়োজনীয় প্লাগইন নিষ্ক্রিয় করুন  
+- নিয়মিত ডাটাবেস এবং ফাইল ব্যাকআপ করুন  
+- Wordfence বা অনুরূপ সিকিউরিটি প্লাগইন ব্যবহার করুন  
 
 ---
 
-## 10. Summary
+## 📌 ১০. সারাংশ
 
-By following these steps:
+এই ধাপগুলো অনুসরণ করলে:
 
-* WordPress is installed on Apache and connected to MySQL
-* Permissions are configured for security
-* Optional virtual host allows custom domains
-* Optional SSL ensures HTTPS
-* You can now manage your website from the WordPress admin dashboard
+- WordPress Apache-এ ইনস্টল এবং MySQL-এ সংযুক্ত হবে  
+- পারমিশন সঠিকভাবে কনফিগার করা হয়েছে  
+- ঐচ্ছিক ভার্চুয়াল হোস্ট দিয়ে কাস্টম ডোমেইন ব্যবহার করা যায়  
+- ঐচ্ছিক SSL দিয়ে HTTPS সক্রিয় করা যায়  
+- আপনি এখন WordPress অ্যাডমিন ড্যাশবোর্ড থেকে ওয়েবসাইট ম্যানেজ করতে পারবেন  
 
-This setup enables you to host blogs, portfolios, or e-commerce sites efficiently on a LAMP server.
-
-```
+এই সেটআপ দিয়ে আপনি ব্লগ, পোর্টফোলিও বা ই-কমার্স সাইট সহজেই হোস্ট করতে পারবেন। 

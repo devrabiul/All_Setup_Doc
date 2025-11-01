@@ -1,38 +1,38 @@
-# LAMP Stack Integration and Full Project Deployment
+# LAMP Stack Integration এবং ফুল প্রজেক্ট ডিপ্লয়মেন্ট
 
-LAMP stands for **Linux, Apache, MySQL, PHP**. It is the most common stack for hosting dynamic web applications. This guide explains how to integrate all components and deploy a full project on an Ubuntu server.
-
----
-
-## 1. Overview of LAMP Components
-
-| Component | Role |
-|-----------|------|
-| Linux     | Operating system |
-| Apache    | Web server |
-| MySQL     | Database server |
-| PHP       | Server-side scripting language |
-
-Each component works together to serve dynamic websites:
-
-1. Apache serves web pages.  
-2. PHP generates dynamic content and interacts with the database.  
-3. MySQL stores and retrieves application data.  
-4. Linux provides a stable environment and command-line tools.
+**LAMP** শব্দটি এসেছে **Linux, Apache, MySQL, PHP** থেকে। এটি ডাইনামিক ওয়েব অ্যাপ্লিকেশন হোস্ট করার সবচেয়ে জনপ্রিয় ও নির্ভরযোগ্য স্ট্যাক। এই অধ্যায়ে আমরা শিখব কীভাবে এই চারটি কম্পোনেন্ট একত্রে কাজ করে এবং কীভাবে Ubuntu সার্ভারে সম্পূর্ণ প্রজেক্ট ডিপ্লয় করতে হয়।
 
 ---
 
-## 2. Preparing the Server
+## 🔍 ১. LAMP Stack-এর উপাদানসমূহ
 
-Before deploying a project:
+| কম্পোনেন্ট | ভূমিকা |
+|------------|---------|
+| **Linux** | অপারেটিং সিস্টেম (Server OS) |
+| **Apache** | ওয়েব সার্ভার যা ওয়েবপেজ পরিবেশন করে |
+| **MySQL** | ডাটাবেস সার্ভার যেখানে তথ্য সংরক্ষণ হয় |
+| **PHP** | সার্ভার-সাইড স্ক্রিপ্টিং ল্যাঙ্গুয়েজ |
+
+এই চারটি উপাদান একসাথে কাজ করে একটি ওয়েব অ্যাপ্লিকেশন চালানোর জন্য:
+
+1. **Apache** ব্রাউজারের রিকোয়েস্ট গ্রহণ করে এবং ওয়েব পেজ সার্ভ করে।  
+2. **PHP** ডাইনামিক কনটেন্ট তৈরি করে এবং **MySQL** এর সাথে যোগাযোগ করে।  
+3. **MySQL** অ্যাপ্লিকেশনের তথ্য সংরক্ষণ ও রিটার্ন করে।  
+4. **Linux** সার্ভার পরিবেশ এবং CLI টুল সরবরাহ করে স্থিতিশীলতা নিশ্চিত করে।
+
+---
+
+## ⚙️ ২. সার্ভার প্রস্তুত করা
+
+প্রথমে সার্ভার আপডেট এবং প্রয়োজনীয় প্যাকেজ ইনস্টল করুন:
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
 sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql -y
-````
+```
 
-Check that all services are running:
+সব সার্ভিস চলছে কিনা যাচাই করুন:
 
 ```bash
 sudo systemctl status apache2
@@ -41,26 +41,28 @@ sudo systemctl status mysql
 
 ---
 
-## 3. Securing MySQL
+## 🔒 ৩. MySQL সুরক্ষিত করা
 
-Run:
+MySQL ইনস্টল করার পর নিরাপত্তা স্ক্রিপ্ট চালান:
 
 ```bash
 sudo mysql_secure_installation
 ```
 
-Steps:
+ধাপে ধাপে নির্দেশনা অনুযায়ী উত্তর দিন:
 
-* Remove anonymous users → y
-* Disallow remote root login → y
-* Remove test database → y
-* Reload privileges → y
+- Anonymous ইউজার মুছুন → `y`  
+- Root রিমোট লগইন নিষিদ্ধ করুন → `y`  
+- টেস্ট ডাটাবেস মুছে ফেলুন → `y`  
+- প্রিভিলেজ রিলোড করুন → `y`
+
+এটি আপনার MySQL সার্ভারকে প্রোডাকশন-রেডি করে তুলবে।
 
 ---
 
-## 4. Uploading Your Project
+## 📁 ৪. প্রজেক্ট আপলোড করা
 
-Use **SCP**, **SFTP**, or Git to upload your project to Apache root:
+আপনি **SCP**, **SFTP** অথবা **Git** ব্যবহার করে প্রজেক্ট সার্ভারে আপলোড করতে পারেন।
 
 ```bash
 sudo cp -r /local/project /var/www/html/myproject
@@ -68,20 +70,20 @@ sudo chown -R www-data:www-data /var/www/html/myproject
 sudo chmod -R 755 /var/www/html/myproject
 ```
 
-* `www-data` is the Apache user
-* Ensure correct permissions for security and functionality
+> 🧩 `www-data` হলো Apache সার্ভিসের ইউজার।  
+> সঠিক পারমিশন সেট করলে নিরাপত্তা ও এক্সিকিউশন সমস্যা কমে যায়।
 
 ---
 
-## 5. Database Setup
+## 🧮 ৫. ডাটাবেস তৈরি করা
 
-1. Login to MySQL:
+১️⃣ MySQL-এ লগইন করুন:
 
 ```bash
 sudo mysql -u root -p
 ```
 
-2. Create a database and user:
+২️⃣ নতুন ডাটাবেস ও ইউজার তৈরি করুন:
 
 ```sql
 CREATE DATABASE myapp;
@@ -91,7 +93,7 @@ FLUSH PRIVILEGES;
 EXIT;
 ```
 
-3. Import database schema (if you have one):
+৩️⃣ যদি প্রজেক্টের জন্য SQL ফাইল থাকে, তা ইমপোর্ট করুন:
 
 ```bash
 mysql -u myuser -p myapp < /path/to/schema.sql
@@ -99,9 +101,9 @@ mysql -u myuser -p myapp < /path/to/schema.sql
 
 ---
 
-## 6. Configuring PHP Project
+## ⚙️ ৬. PHP প্রজেক্ট কনফিগার করা
 
-* Update `.env` or config files with database credentials:
+`.env` বা `config.php` ফাইলে ডাটাবেস ইনফো আপডেট করুন:
 
 ```
 DB_HOST=localhost
@@ -110,7 +112,7 @@ DB_USERNAME=myuser
 DB_PASSWORD=mypassword
 ```
 
-* Test the connection with a simple PHP script:
+সিম্পল কানেকশন টেস্ট স্ক্রিপ্ট তৈরি করুন:
 
 ```php
 <?php
@@ -120,19 +122,21 @@ echo "Database connected successfully";
 ?>
 ```
 
+যদি “Database connected successfully” দেখা যায়, তাহলে কানেকশন ঠিক আছে ✅
+
 ---
 
-## 7. Apache Virtual Hosts (Optional)
+## 🌐 ৭. Apache Virtual Host (ঐচ্ছিক)
 
-To host multiple projects or a custom domain:
+একই সার্ভারে একাধিক প্রজেক্ট বা কাস্টম ডোমেইন হোস্ট করতে পারেন।
 
-1. Create configuration:
+১️⃣ নতুন কনফিগারেশন ফাইল তৈরি করুন:
 
 ```bash
 sudo nano /etc/apache2/sites-available/myproject.conf
 ```
 
-Content:
+নিচের কনটেন্ট যোগ করুন:
 
 ```apache
 <VirtualHost *:80>
@@ -147,7 +151,7 @@ Content:
 </VirtualHost>
 ```
 
-2. Enable site and reload Apache:
+২️⃣ সাইট সক্রিয় করুন ও Apache রিলোড করুন:
 
 ```bash
 sudo a2ensite myproject.conf
@@ -157,22 +161,20 @@ sudo systemctl reload apache2
 
 ---
 
-## 8. Testing the Deployment
+## 🧪 ৮. প্রজেক্ট টেস্ট করা
 
-* Open browser:
+ব্রাউজারে গিয়ে খুলুন:
 
 ```
 http://your-server-ip
 ```
-
-or
-
+অথবা  
 ```
 http://example.com
 ```
 
-* Verify dynamic pages are loading and database connection works.
-* Check Apache logs if there are errors:
+- যদি ওয়েবপেজ লোড হয় এবং ডাটাবেস সংযুক্ত থাকে → ✅ ডিপ্লয় সফল।  
+- যদি সমস্যা দেখা দেয়, লগ চেক করুন:
 
 ```bash
 tail -f /var/log/apache2/error.log
@@ -180,18 +182,17 @@ tail -f /var/log/apache2/error.log
 
 ---
 
-## 9. Security Best Practices
+## 🛡️ ৯. নিরাপত্তা টিপস
 
-* Disable root SSH login
-* Set correct permissions on `/var/www/html`
-* Keep LAMP packages updated:
+- **Root SSH লগইন নিষিদ্ধ করুন**  
+- `/var/www/html` এ সঠিক পারমিশন ব্যবহার করুন  
+- নিয়মিত আপডেট করুন:
 
 ```bash
-sudo apt update
-sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 ```
 
-* Enable UFW firewall:
+- **UFW Firewall** সক্রিয় করুন:
 
 ```bash
 sudo ufw allow in "Apache Full"
@@ -199,7 +200,7 @@ sudo ufw enable
 sudo ufw status
 ```
 
-* Consider SSL (HTTPS) with Certbot:
+- **SSL (HTTPS)** যুক্ত করুন:
 
 ```bash
 sudo apt install certbot python3-certbot-apache -y
@@ -208,15 +209,13 @@ sudo certbot --apache
 
 ---
 
-## 10. Summary
+## 🧾 ১০. সারাংশ
 
-By integrating all LAMP components:
+এই অধ্যায়ে আপনি শিখলেন—
 
-* Your PHP project can serve dynamic content
-* MySQL stores your application data
-* Apache serves the web pages
-* Linux ensures stable and secure hosting
+- LAMP Stack-এর উপাদান এবং তাদের ভূমিকা  
+- সার্ভার সেটআপ, সিকিউরিটি ও প্রজেক্ট আপলোড  
+- ডাটাবেস তৈরি ও কানেকশন  
+- Virtual Host, Firewall এবং SSL সেটআপ  
 
-This process allows you to fully deploy, manage, and maintain web applications on an Ubuntu server.
-
-```
+👉 এই ধাপগুলো আয়ত্ত করলে আপনি একটি **সম্পূর্ণ PHP ওয়েব প্রজেক্ট** Ubuntu সার্ভারে সফলভাবে ডিপ্লয় করতে পারবেন 🚀

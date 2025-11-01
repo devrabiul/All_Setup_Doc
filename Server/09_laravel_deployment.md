@@ -1,23 +1,23 @@
-# Laravel Deployment on LAMP Server
+# Laravel ডিপ্লয়মেন্ট LAMP সার্ভারে
 
-Laravel is a modern PHP framework used for building complex web applications. This guide explains how to deploy a Laravel project on an Ubuntu server with LAMP stack.
+Laravel হলো আধুনিক PHP ফ্রেমওয়ার্ক যা জটিল ওয়েব অ্যাপ্লিকেশন তৈরি করতে ব্যবহৃত হয়। এই গাইডে দেখানো হয়েছে কীভাবে একটি Laravel প্রজেক্ট Ubuntu সার্ভারে LAMP স্ট্যাক ব্যবহার করে ডিপ্লয় করা যায়।
 
 ---
 
-## 1. Prerequisites
+## ⚙️ ১. প্রয়োজনীয়তা
 
-- Ubuntu server with **Apache, MySQL, PHP** installed  
-- PHP version >= 8.0 (check with `php -v`)  
-- Composer installed (dependency manager for PHP)
+- Ubuntu সার্ভার যেখানে **Apache, MySQL, PHP** ইনস্টল আছে  
+- PHP সংস্করণ >= 8.0 (যাচাই: `php -v`)  
+- Composer ইনস্টল করা আছে (PHP ডিপেন্ডেন্সি ম্যানেজার)
 
-Install Composer:
+Composer ইনস্টল:
 
 ```bash
 sudo apt update
 sudo apt install composer -y
-````
+```
 
-Check version:
+সংস্করণ যাচাই:
 
 ```bash
 composer -V
@@ -25,9 +25,9 @@ composer -V
 
 ---
 
-## 2. Uploading Laravel Project
+## 📤 ২. Laravel প্রজেক্ট আপলোড
 
-Upload your Laravel project using **SCP**, **SFTP**, or **Git**:
+আপনার Laravel প্রজেক্ট আপলোড করতে পারেন **SCP**, **SFTP**, বা **Git** ব্যবহার করে:
 
 ```bash
 scp -i botkey.pem -r /local/laravel_project ubuntu@server_ip:/var/www/html/laravel_project
@@ -35,9 +35,9 @@ scp -i botkey.pem -r /local/laravel_project ubuntu@server_ip:/var/www/html/larav
 
 ---
 
-## 3. Set Directory Permissions
+## 📝 ৩. ডিরেক্টরি পারমিশন সেট করা
 
-Laravel requires **storage** and **bootstrap/cache** directories to be writable:
+Laravel এর **storage** এবং **bootstrap/cache** ডিরেক্টরিগুলো লিখনযোগ্য হতে হবে:
 
 ```bash
 sudo chown -R www-data:www-data /var/www/html/laravel_project
@@ -45,23 +45,25 @@ sudo chmod -R 775 /var/www/html/laravel_project/storage
 sudo chmod -R 775 /var/www/html/laravel_project/bootstrap/cache
 ```
 
+> এই ধাপটি গুরুত্বপূর্ণ, না হলে অ্যাপ্লিকেশন রান করার সময় ফাইল পারমিশন সংক্রান্ত সমস্যা দেখা দিতে পারে।
+
 ---
 
-## 4. Install Dependencies
+## 📦 ৪. ডিপেন্ডেন্সি ইনস্টল
 
-Navigate to project folder:
+প্রজেক্ট ফোল্ডারে যান:
 
 ```bash
 cd /var/www/html/laravel_project
 ```
 
-Install PHP dependencies:
+PHP ডিপেন্ডেন্সি ইনস্টল করুন (ডেভেলপমেন্ট প্যাকেজ ছাড়া):
 
 ```bash
 composer install --no-dev
 ```
 
-Generate application key:
+অ্যাপ্লিকেশন কী জেনারেট করুন:
 
 ```bash
 php artisan key:generate
@@ -69,9 +71,9 @@ php artisan key:generate
 
 ---
 
-## 5. Configure Environment
+## 🔧 ৫. পরিবেশ কনফিগারেশন
 
-Update `.env` file with your database and server info:
+`.env` ফাইলে আপনার ডাটাবেস ও সার্ভার তথ্য আপডেট করুন:
 
 ```
 APP_NAME=MyApp
@@ -90,15 +92,15 @@ DB_PASSWORD=mypassword
 
 ---
 
-## 6. Database Migration & Seeding
+## 💾 ৬. ডাটাবেস মাইগ্রেশন ও সিডিং
 
-Run migrations to create tables:
+মাইগ্রেশন চালিয়ে টেবিল তৈরি করুন:
 
 ```bash
 php artisan migrate
 ```
 
-Optional: seed database with initial data:
+ঐচ্ছিক: প্রাথমিক ডাটা সিড করতে পারেন:
 
 ```bash
 php artisan db:seed
@@ -106,15 +108,15 @@ php artisan db:seed
 
 ---
 
-## 7. Apache Virtual Host for Laravel
+## 🌐 ৭. Apache ভার্চুয়াল হোস্ট
 
-1. Create virtual host configuration:
+1. ভার্চুয়াল হোস্ট কনফিগারেশন তৈরি করুন:
 
 ```bash
 sudo nano /etc/apache2/sites-available/laravel.conf
 ```
 
-Content:
+কনফিগারেশন:
 
 ```apache
 <VirtualHost *:80>
@@ -131,7 +133,7 @@ Content:
 </VirtualHost>
 ```
 
-2. Enable site and rewrite module:
+2. সাইট এবং রিরাইট মডিউল সক্রিয় করুন:
 
 ```bash
 sudo a2ensite laravel.conf
@@ -141,48 +143,46 @@ sudo systemctl restart apache2
 
 ---
 
-## 8. Testing Laravel Application
+## 🔍 ৮. Laravel অ্যাপ্লিকেশন টেস্ট
 
-Open browser:
+ব্রাউজারে খুলুন:
 
 ```
 http://your-server-ip
 ```
 
-* You should see Laravel welcome page
-* If you get 500 error, check:
+- Laravel ওয়েলকাম পেজ দেখা উচিত  
+- যদি 500 এরর আসে, চেক করুন:
 
 ```bash
 tail -f /var/log/apache2/error.log
 ```
 
-* Ensure **storage** and **bootstrap/cache** directories are writable
+- নিশ্চিত করুন **storage** এবং **bootstrap/cache** ডিরেক্টরিগুলো লিখনযোগ্য
 
 ---
 
-## 9. Optional: Enabling HTTPS
+## 🔒 ৯. ঐচ্ছিক: HTTPS সক্রিয় করা
 
-Install Certbot for SSL:
+Certbot ব্যবহার করে SSL ইনস্টল করুন:
 
 ```bash
 sudo apt install certbot python3-certbot-apache -y
 sudo certbot --apache -d example.com
 ```
 
-This enables HTTPS with a free SSL certificate.
+> এটি ফ্রি SSL সার্টিফিকেট দিয়ে HTTPS সক্রিয় করবে।
 
 ---
 
-## 10. Summary
+## ✅ ১০. সারাংশ
 
-By following these steps:
+এই ধাপগুলো অনুসরণ করলে:
 
-* Laravel project is uploaded and dependencies installed
-* `.env` configured for database connection
-* Apache virtual host points to `public` directory
-* Database migrations and optional seeders applied
-* Optional SSL setup for secure HTTPS
+- Laravel প্রজেক্ট আপলোড এবং ডিপেন্ডেন্সি ইনস্টল করা হয়েছে  
+- `.env` ফাইলে ডাটাবেস সংযোগ কনফিগার করা হয়েছে  
+- Apache ভার্চুয়াল হোস্ট `public` ডিরেক্টরির দিকে নির্দেশ করছে  
+- ডাটাবেস মাইগ্রেশন এবং ঐচ্ছিক সিডিং সম্পন্ন হয়েছে  
+- HTTPS (ঐচ্ছিক) সক্রিয় করা হয়েছে  
 
-You now have a fully functional Laravel application running on a LAMP server.
-
-```
+এখন আপনার Laravel অ্যাপ্লিকেশন সম্পূর্ণভাবে LAMP সার্ভারে রান করছে। 

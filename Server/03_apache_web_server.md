@@ -1,43 +1,43 @@
-# Apache Web Server and Web Hosting Basics
+# Apache ওয়েব সার্ভার ও ওয়েব হোস্টিং বেসিক
 
-Apache is one of the most popular web servers in the world. It serves web pages to users and works seamlessly with PHP and MySQL to run dynamic websites. This guide explains how Apache works and how to use it for hosting websites on Ubuntu.
-
----
-
-## 1. What is Apache?
-
-Apache HTTP Server is an open-source web server software that:
-
-- Listens for HTTP requests from clients (browsers)  
-- Processes requests and serves static and dynamic content  
-- Works with modules to extend functionality (e.g., PHP module)  
-- Can host multiple websites using virtual hosts  
+Apache হলো বিশ্বের সবচেয়ে জনপ্রিয় ওয়েব সার্ভারগুলোর একটি। এটি ব্যবহারকারীর ব্রাউজারে ওয়েব পেজ পাঠায় এবং PHP ও MySQL-এর সাথে কাজ করে ডাইনামিক ওয়েবসাইট চালাতে সাহায্য করে। এই গাইডে আপনি শিখবেন Apache কীভাবে কাজ করে এবং কীভাবে Ubuntu সার্ভারে এটি দিয়ে ওয়েবসাইট হোস্ট করা যায়।
 
 ---
 
-## 2. Installing Apache on Ubuntu
+## 🧠 ১. Apache কী?
 
-Update your packages:
+Apache HTTP Server একটি ওপেন-সোর্স ওয়েব সার্ভার সফটওয়্যার, যা —
+
+- ব্রাউজার (client) থেকে আসা HTTP অনুরোধ (request) গ্রহণ করে  
+- অনুরোধ অনুযায়ী স্ট্যাটিক (HTML, CSS, JS) বা ডাইনামিক (PHP) কনটেন্ট সরবরাহ করে  
+- বিভিন্ন মডিউল ব্যবহার করে ফিচার বাড়ানো যায় (যেমন PHP module)  
+- একই সার্ভারে একাধিক ওয়েবসাইট হোস্ট করতে পারে (Virtual Hosts ব্যবহার করে)
+
+---
+
+## ⚙️ ২. Ubuntu তে Apache ইনস্টল করা
+
+প্রথমে প্যাকেজগুলো আপডেট করুন:
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
-````
+```
 
-Install Apache:
+এরপর Apache ইনস্টল করুন:
 
 ```bash
 sudo apt install apache2 -y
 ```
 
-Enable and start Apache service:
+Apache সার্ভিস চালু ও এনেবল করুন:
 
 ```bash
 sudo systemctl enable apache2
 sudo systemctl start apache2
 ```
 
-Check status:
+Apache এর স্ট্যাটাস চেক করতে:
 
 ```bash
 sudo systemctl status apache2
@@ -45,59 +45,55 @@ sudo systemctl status apache2
 
 ---
 
-## 3. Testing Apache
+## 🌐 ৩. Apache টেস্ট করা
 
-1. Open your server IP in a browser:
+১. ব্রাউজারে আপনার সার্ভারের IP লিখুন:
 
 ```
 http://your-server-ip
 ```
 
-2. You should see the **“Apache2 Ubuntu Default Page”**, which confirms Apache is working.
+২. “Apache2 Ubuntu Default Page” দেখতে পেলে বুঝবেন সার্ভার সঠিকভাবে কাজ করছে ✅
 
 ---
 
-## 4. Apache Directory Structure
+## 📂 ৪. Apache ডিরেক্টরি স্ট্রাকচার
 
-Key directories:
-
-| Directory                    | Purpose                               |
-| ---------------------------- | ------------------------------------- |
-| /var/www/html                | Default web root directory            |
-| /etc/apache2                 | Apache configuration files            |
-| /etc/apache2/sites-available | Available virtual host configurations |
-| /etc/apache2/sites-enabled   | Enabled virtual hosts (symlinked)     |
-| /var/log/apache2             | Apache access and error logs          |
+| ডিরেক্টরি | কাজ |
+|------------|------|
+| `/var/www/html` | ডিফল্ট ওয়েব ফাইলের জায়গা |
+| `/etc/apache2` | মূল কনফিগারেশন ফোল্ডার |
+| `/etc/apache2/sites-available` | সব Virtual Host ফাইল রাখা হয় |
+| `/etc/apache2/sites-enabled` | সক্রিয় Virtual Host লিঙ্ক |
+| `/var/log/apache2` | Apache লগ ফাইল (error, access) |
 
 ---
 
-## 5. Managing Apache
-
-Common commands:
+## 🔧 ৫. Apache ম্যানেজ করার কমান্ড
 
 ```bash
-sudo systemctl start apache2      # Start Apache
-sudo systemctl stop apache2       # Stop Apache
-sudo systemctl restart apache2    # Restart Apache
-sudo systemctl reload apache2     # Reload configuration without stopping
-sudo systemctl status apache2     # Check status
+sudo systemctl start apache2      # Apache চালু করা
+sudo systemctl stop apache2       # Apache বন্ধ করা
+sudo systemctl restart apache2    # Apache রিস্টার্ট করা
+sudo systemctl reload apache2     # কনফিগারেশন রিলোড করা (চালু থাকা অবস্থায়)
+sudo systemctl status apache2     # স্ট্যাটাস দেখা
 ```
 
 ---
 
-## 6. Configuring Virtual Hosts
+## 🌍 ৬. Virtual Host সেটআপ করা
 
-Virtual hosts allow hosting multiple websites on the same server.
+Virtual Host দিয়ে একই সার্ভারে একাধিক ওয়েবসাইট চালানো যায়।
 
-### Example Virtual Host:
+### উদাহরণ:
 
-Create file:
+একটি কনফিগ ফাইল তৈরি করুন:
 
 ```bash
 sudo nano /etc/apache2/sites-available/mywebsite.conf
 ```
 
-Content:
+এর মধ্যে লিখুন:
 
 ```apache
 <VirtualHost *:80>
@@ -113,7 +109,7 @@ Content:
 </VirtualHost>
 ```
 
-Enable the site:
+তারপর সাইটটি এনেবল করে Apache রিলোড করুন:
 
 ```bash
 sudo a2ensite mywebsite.conf
@@ -122,41 +118,41 @@ sudo systemctl reload apache2
 
 ---
 
-## 7. Permissions for Web Files
+## 🔐 ৭. ওয়েব ফাইলের পারমিশন ঠিক করা
 
-Ensure Apache can access web files:
+Apache যেন ফাইলগুলো অ্যাক্সেস করতে পারে তা নিশ্চিত করুন:
 
 ```bash
 sudo chown -R www-data:www-data /var/www/html
 sudo chmod -R 755 /var/www/html
 ```
 
-* `www-data` → Apache user
-* `755` → directories readable/executable, owner writable
+- `www-data` → Apache এর ইউজার  
+- `755` → ডিরেক্টরি রিড/এক্সিকিউটেবল, ওনার রাইটেবল
 
 ---
 
-## 8. Enabling .htaccess and Rewrite Module
+## 🧩 ৮. .htaccess এবং Rewrite Module এনেবল করা
 
-For dynamic websites (like Laravel):
+Laravel বা অন্য ডাইনামিক সাইটের জন্য এটি দরকার হয়:
 
 ```bash
 sudo a2enmod rewrite
 sudo systemctl restart apache2
 ```
 
-Create `.htaccess` in your project folder to control redirects, caching, or security rules.
+এরপর আপনার প্রজেক্ট ফোল্ডারে `.htaccess` ফাইল তৈরি করে রিডাইরেক্ট, ক্যাশ বা সিকিউরিটি রুল সেট করতে পারেন।
 
 ---
 
-## 9. Logs and Troubleshooting
+## 🧾 ৯. লগ দেখা ও সমস্যা সমাধান
 
-Apache logs are essential for debugging:
+Apache লগ ফাইলগুলো সমস্যা খুঁজে বের করতে খুব দরকারি:
 
-* Access log: `/var/log/apache2/access.log`
-* Error log: `/var/log/apache2/error.log`
+- Access log: `/var/log/apache2/access.log`  
+- Error log: `/var/log/apache2/error.log`
 
-Check logs:
+লগ লাইভ দেখতে:
 
 ```bash
 tail -f /var/log/apache2/error.log
@@ -164,15 +160,13 @@ tail -f /var/log/apache2/error.log
 
 ---
 
-## 10. Summary
+## ✅ ১০. সারাংশ
 
-Apache is a powerful and flexible web server. By mastering:
+Apache হলো একটি শক্তিশালী এবং সহজে কনফিগারযোগ্য ওয়েব সার্ভার। আপনি যদি নিচের বিষয়গুলো বুঝে ফেলেন —
 
-* Installation & service management
-* Directory structure & permissions
-* Virtual hosts configuration
-* Logs and .htaccess rules
+- Apache ইনস্টল ও ম্যানেজ করা  
+- ফাইল পারমিশন ও ডিরেক্টরি স্ট্রাকচার  
+- Virtual Host কনফিগারেশন  
+- লগ দেখা ও সমস্যা সমাধান  
 
-…you can deploy and host multiple websites and PHP applications on Ubuntu servers.
-
-```
+তাহলে আপনি সহজেই এক বা একাধিক ওয়েবসাইট ও PHP অ্যাপ্লিকেশন Ubuntu সার্ভারে হোস্ট করতে পারবেন 🚀

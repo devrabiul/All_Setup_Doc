@@ -1,46 +1,46 @@
-# Basic Troubleshooting and Common Errors on LAMP Server
+# LAMP সার্ভারে বেসিক ট্রাবলশুটিং এবং সাধারণ এররসমূহ
 
-Even after setting up LAMP and deploying projects, you may encounter errors. This guide covers common issues and how to troubleshoot them on Ubuntu servers.
+LAMP সেটআপ এবং প্রজেক্ট ডিপ্লয় করার পরও কখনো কখনো এরর দেখা দিতে পারে। এই গাইডে Ubuntu সার্ভারে সাধারণ সমস্যা এবং তাদের সমাধান দেখানো হয়েছে।
 
 ---
 
-## 1. Apache Errors
+## ⚙️ ১. Apache এরর
 
-### Common Issue: 500 Internal Server Error
+### সাধারণ সমস্যা: 500 Internal Server Error
 
-Check Apache error log:
+Apache এরর লগ চেক করুন:
 
 ```bash
 tail -f /var/log/apache2/error.log
-````
+```
 
-* Often caused by wrong **permissions** or **.htaccess** rules
-* Fix permissions:
+* প্রায়শই এর কারণ: ভুল **permissions** বা **.htaccess** নিয়ম  
+* পারমিশন ঠিক করুন:
 
 ```bash
 sudo chown -R www-data:www-data /var/www/html/myproject
 sudo chmod -R 755 /var/www/html/myproject
 ```
 
-* Ensure `.htaccess` syntax is correct
+* `.htaccess` সঠিকভাবে লেখা আছে কিনা যাচাই করুন
 
 ---
 
-### Common Issue: Apache Not Starting
+### সাধারণ সমস্যা: Apache শুরু হচ্ছে না
 
-Check status:
+স্ট্যাটাস চেক করুন:
 
 ```bash
 sudo systemctl status apache2
 ```
 
-Check for port conflicts:
+পোর্ট কনফ্লিক্ট চেক করুন:
 
 ```bash
 sudo netstat -tulnp | grep :80
 ```
 
-Restart Apache:
+Apache রিস্টার্ট করুন:
 
 ```bash
 sudo systemctl restart apache2
@@ -48,18 +48,18 @@ sudo systemctl restart apache2
 
 ---
 
-## 2. MySQL Errors
+## 💾 ২. MySQL এরর
 
-### Cannot Connect to Database
+### ডাটাবেসে কানেকশন যায় না
 
-* Verify credentials in `.env` or `wp-config.php`
-* Test manually:
+* `.env` বা `wp-config.php` এ ক্রেডেনশিয়াল যাচাই করুন  
+* ম্যানুয়ালি পরীক্ষা করুন:
 
 ```bash
 mysql -u myuser -p myapp
 ```
 
-* Ensure MySQL service is running:
+* MySQL সার্ভিস চলছে কিনা চেক করুন:
 
 ```bash
 sudo systemctl status mysql
@@ -67,10 +67,10 @@ sudo systemctl status mysql
 
 ---
 
-### Error: “Access denied for user”
+### এরর: “Access denied for user”
 
-* Check username, password, and host (`localhost`)
-* Re-grant privileges:
+* ইউজারনেম, পাসওয়ার্ড এবং হোস্ট (`localhost`) চেক করুন  
+* প্রিভিলেজ পুনরায় দিন:
 
 ```sql
 GRANT ALL PRIVILEGES ON myapp.* TO 'myuser'@'localhost';
@@ -79,29 +79,29 @@ FLUSH PRIVILEGES;
 
 ---
 
-## 3. PHP Errors
+## 📝 ৩. PHP এরর
 
-### 500 Error on Laravel or PHP App
+### Laravel বা PHP অ্যাপে 500 এরর
 
-* Check Apache error log:
+* Apache এরর লগ চেক করুন:
 
 ```bash
 tail -f /var/log/apache2/error.log
 ```
 
-* Check PHP modules:
+* PHP মডিউল চেক করুন:
 
 ```bash
 php -m
 ```
 
-* Common missing modules:
+* সাধারণ মিসিং মডিউল:
 
 ```
 php-mysql, php-curl, php-mbstring, php-xml, php-zip
 ```
 
-Install missing modules:
+মিসিং মডিউল ইনস্টল করুন:
 
 ```bash
 sudo apt install php-mysql php-curl php-mbstring php-xml php-zip -y
@@ -110,9 +110,9 @@ sudo systemctl restart apache2
 
 ---
 
-### Syntax Error in PHP
+### PHP সিনট্যাক্স এরর
 
-Check file for mistakes:
+ফাইল যাচাই করুন:
 
 ```bash
 php -l filename.php
@@ -120,17 +120,17 @@ php -l filename.php
 
 ---
 
-## 4. File Permissions Issues
+## 🔐 ৪. ফাইল পারমিশন সমস্যা
 
-* Web applications often fail due to incorrect permissions
-* Ensure Apache user owns project files:
+* ভুল পারমিশনের কারণে ওয়েব অ্যাপ্লিকেশন ব্যর্থ হতে পারে  
+* Apache ইউজারকে প্রজেক্ট ফাইলের মালিক করুন:
 
 ```bash
 sudo chown -R www-data:www-data /var/www/html/myproject
 sudo chmod -R 755 /var/www/html/myproject
 ```
 
-* Directories that need write access (Laravel):
+* Laravel-এ write access প্রয়োজন এমন ডিরেক্টরি:
 
 ```
 storage, bootstrap/cache
@@ -138,18 +138,18 @@ storage, bootstrap/cache
 
 ---
 
-## 5. SSH & Connection Errors
+## 🖧 ৫. SSH ও কানেকশন এরর
 
-### Timeout or Refused
+### Timeout বা Refused
 
-* Check server IP and firewall:
+* সার্ভার IP এবং ফায়ারওয়াল চেক করুন:
 
 ```bash
 sudo ufw status
 ping server_ip
 ```
 
-* Ensure SSH service is running:
+* SSH সার্ভিস চলছে কিনা চেক করুন:
 
 ```bash
 sudo systemctl status ssh
@@ -157,15 +157,15 @@ sudo systemctl status ssh
 
 ---
 
-### Permission Denied (Key Issues)
+### Permission Denied (Key Issue)
 
-* Correct permissions:
+* সঠিক পারমিশন দিন:
 
 ```bash
 chmod 400 botkey.pem
 ```
 
-* Correct user:
+* সঠিক ইউজার ব্যবহার করুন:
 
 ```bash
 ssh -i botkey.pem ubuntu@server_ip
@@ -173,25 +173,16 @@ ssh -i botkey.pem ubuntu@server_ip
 
 ---
 
-## 6. Troubleshooting Tips
+## 💡 ৬. ট্রাবলশুটিং টিপস
 
-1. **Check logs first** (Apache, MySQL, PHP, system)
-2. **Test components individually** (PHP script, DB connection, Apache)
-3. **Check firewall and ports**
-4. **Verify permissions**
-5. **Restart services after changes**
+1. **প্রথমে লগ চেক করুন** (Apache, MySQL, PHP, সিস্টেম)  
+2. **কম্পোনেন্ট আলাদাভাবে পরীক্ষা করুন** (PHP স্ক্রিপ্ট, DB কানেকশন, Apache)  
+3. **ফায়ারওয়াল এবং পোর্ট যাচাই করুন**  
+4. **পারমিশন যাচাই করুন**  
+5. **পরিবর্তনের পরে সার্ভিস রিস্টার্ট করুন**
 
 ---
 
-## 7. Summary
+## 📌 ৭. সারাংশ
 
-Troubleshooting is an essential skill for server management. By learning to:
-
-* Read and interpret logs
-* Check service status
-* Verify configuration files
-* Correct permissions
-
-…you can quickly identify and fix issues on your LAMP server, ensuring your web applications remain stable and accessible.
-
-```
+ট্রাবলশুটিং হলো সার্ভার ম্যানেজমেন্টের একটি গুরুত্বপূর্ণ দক্ষতা। লগ পড়া, সার্ভিস স্ট্যাটাস যাচাই করা, কনফিগারেশন ঠিক করা এবং পারমিশন ঠিক করা শিখে আপনি দ্রুত LAMP সার্ভারের সমস্যা সমাধান করতে পারবেন এবং আপনার ওয়েব অ্যাপ্লিকেশন স্থিতিশীল ও অ্যাক্সেসযোগ্য থাকবে।

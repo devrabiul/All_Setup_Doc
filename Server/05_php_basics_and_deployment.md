@@ -1,36 +1,36 @@
-# PHP Basics and PHP Deployment on Ubuntu
+# PHP বেসিকস এবং Ubuntu তে PHP ডিপ্লয়মেন্ট
 
-PHP is a popular server-side scripting language used to build dynamic web applications. This guide explains PHP basics and how to deploy PHP applications on an Ubuntu server with Apache and MySQL.
-
----
-
-## 1. What is PHP?
-
-PHP (Hypertext Preprocessor) is a scripting language that:
-
-- Runs on the server to generate dynamic content  
-- Integrates with databases (like MySQL)  
-- Handles forms, sessions, cookies, and authentication  
-- Works with most web servers, especially Apache  
+PHP হলো একটি জনপ্রিয় সার্ভার-সাইড স্ক্রিপ্টিং ল্যাঙ্গুয়েজ, যা ব্যবহার করে ডাইনামিক ওয়েব অ্যাপ্লিকেশন তৈরি করা যায়। এই গাইডে আপনি শিখবেন PHP এর বেসিক ধারণা এবং কীভাবে Ubuntu সার্ভারে Apache ও MySQL-এর সাথে PHP অ্যাপ্লিকেশন ডিপ্লয় করবেন।
 
 ---
 
-## 2. Installing PHP on Ubuntu
+## 🧠 ১. PHP কী?
 
-Update packages:
+**PHP (Hypertext Preprocessor)** হলো একটি সার্ভার-সাইড ল্যাঙ্গুয়েজ যা:
+
+- সার্ভারে চলে এবং ডাইনামিক কনটেন্ট তৈরি করে  
+- ডাটাবেসের (যেমন MySQL) সাথে যুক্ত হয়  
+- ফর্ম, সেশন, কুকি এবং লগইন সিস্টেম পরিচালনা করে  
+- Apache সহ প্রায় সব ওয়েব সার্ভারের সাথে কাজ করে  
+
+---
+
+## ⚙️ ২. Ubuntu তে PHP ইনস্টল করা
+
+প্রথমে প্যাকেজ আপডেট করুন:
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
-````
+```
 
-Install PHP along with Apache module and MySQL extension:
+তারপর PHP, Apache মডিউল এবং MySQL এক্সটেনশনসহ ইনস্টল করুন:
 
 ```bash
 sudo apt install php libapache2-mod-php php-mysql -y
 ```
 
-Check version:
+ভার্সন চেক করুন:
 
 ```bash
 php -v
@@ -38,27 +38,27 @@ php -v
 
 ---
 
-## 3. Testing PHP
+## 🧩 ৩. PHP টেস্ট করা
 
-Create a `phpinfo.php` file to check installation:
+ইনস্টলেশন সঠিকভাবে হয়েছে কিনা দেখতে `phpinfo.php` ফাইল তৈরি করুন:
 
 ```bash
 echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/phpinfo.php
 ```
 
-Open in a browser:
+ব্রাউজারে খুলুন:
 
 ```
 http://your-server-ip/phpinfo.php
 ```
 
-You should see a PHP information page with all installed modules.
+আপনি একটি **PHP Information** পেজ দেখবেন, যেখানে ইনস্টলকৃত সব মডিউলের তথ্য থাকবে।
 
 ---
 
-## 4. PHP Basics
+## 💡 ৪. PHP বেসিক ধারণা
 
-### Variables and Data Types
+### 🔤 ভ্যারিয়েবল ও ডাটা টাইপ
 
 ```php
 <?php
@@ -69,7 +69,7 @@ $grades = array(90, 85, 78);
 ?>
 ```
 
-### Conditional Statements
+### 🧭 শর্ত (Conditional Statement)
 
 ```php
 <?php
@@ -81,7 +81,7 @@ if ($age > 18) {
 ?>
 ```
 
-### Loops
+### 🔁 লুপ (Loops)
 
 ```php
 <?php
@@ -95,7 +95,7 @@ foreach ($grades as $grade) {
 ?>
 ```
 
-### Functions
+### 🧮 ফাংশন (Functions)
 
 ```php
 <?php
@@ -106,7 +106,7 @@ echo greet("Rabiul");
 ?>
 ```
 
-### Working with Forms
+### 📝 ফর্মের সাথে কাজ করা
 
 ```php
 <form method="post" action="submit.php">
@@ -126,7 +126,7 @@ echo "Hello, $name!";
 
 ---
 
-## 5. Connecting PHP to MySQL
+## 🔗 ৫. PHP এবং MySQL কানেকশন
 
 ```php
 <?php
@@ -146,9 +146,9 @@ echo "Connected successfully";
 
 ---
 
-## 6. Deploying PHP Applications on Ubuntu
+## 🚀 ৬. Ubuntu তে PHP অ্যাপ্লিকেশন ডিপ্লয় করা
 
-1. Place project files in Apache document root:
+১️⃣ প্রজেক্ট ফাইলগুলো Apache এর ডকুমেন্ট রুটে কপি করুন:
 
 ```bash
 sudo cp -r /local/project /var/www/html/myproject
@@ -156,13 +156,13 @@ sudo chown -R www-data:www-data /var/www/html/myproject
 sudo chmod -R 755 /var/www/html/myproject
 ```
 
-2. Test in a browser:
+২️⃣ ব্রাউজারে খুলে টেস্ট করুন:
 
 ```
 http://your-server-ip/myproject
 ```
 
-3. Optional: Configure virtual host for custom domain:
+৩️⃣ কাস্টম ডোমেইনের জন্য Virtual Host কনফিগার করুন (ঐচ্ছিক):
 
 ```apache
 <VirtualHost *:80>
@@ -175,7 +175,7 @@ http://your-server-ip/myproject
 </VirtualHost>
 ```
 
-Enable site and reload Apache:
+সাইট সক্রিয় করুন এবং Apache রিলোড করুন:
 
 ```bash
 sudo a2ensite myproject.conf
@@ -184,22 +184,22 @@ sudo systemctl reload apache2
 
 ---
 
-## 7. PHP Security Tips
+## 🔒 ৭. PHP সিকিউরিটি টিপস
 
-* Never display errors on a live site: `display_errors = Off` in `php.ini`
-* Validate all user input
-* Use prepared statements for database queries
-* Keep PHP and modules updated
+- লাইভ সার্ভারে **error display বন্ধ রাখুন:** `display_errors = Off` (`php.ini` তে)  
+- সব ইউজার ইনপুট যাচাই করুন (validation)  
+- SQL ইনজেকশন এড়াতে **prepared statements** ব্যবহার করুন  
+- PHP ও মডিউলগুলো নিয়মিত আপডেট রাখুন  
 
 ---
 
-## 8. Summary
+## ✅ ৮. সারাংশ
 
-By learning PHP basics and deployment:
+এই অধ্যায়ের মাধ্যমে আপনি শিখলেন —
 
-* You can create dynamic web pages
-* Connect to MySQL databases
-* Deploy projects on Ubuntu servers with Apache
-* Understand security best practices for live applications
+- PHP এর বেসিক ধারণা  
+- MySQL ডাটাবেসের সাথে কানেকশন  
+- Ubuntu সার্ভারে প্রজেক্ট ডিপ্লয় করা  
+- লাইভ সাইটের সিকিউরিটি মেনে চলা  
 
-```
+এগুলো আয়ত্ত করলে আপনি সহজেই একটি **ফুল-ফাংশনাল PHP ওয়েব অ্যাপ্লিকেশন** সার্ভারে হোস্ট করতে পারবেন 🚀

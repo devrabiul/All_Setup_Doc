@@ -1,36 +1,36 @@
-# MySQL Database Management for Web Applications
+# MySQL ডাটাবেস ম্যানেজমেন্ট ফর ওয়েব অ্যাপ্লিকেশন
 
-MySQL is a widely used relational database management system (RDBMS) that stores and organizes data for web applications. In this guide, you will learn how to install, secure, and manage MySQL on Ubuntu, as well as connect it with PHP applications.
-
----
-
-## 1. What is MySQL?
-
-MySQL is an open-source RDBMS that allows:
-
-- Storing structured data in tables  
-- Querying data using SQL (Structured Query Language)  
-- Connecting databases with web applications (PHP, Laravel, WordPress, etc.)  
-- Managing multiple users with privileges  
+MySQL হলো একটি জনপ্রিয় রিলেশনাল ডাটাবেস ম্যানেজমেন্ট সিস্টেম (RDBMS), যা ওয়েব অ্যাপ্লিকেশনের জন্য তথ্য সংরক্ষণ ও পরিচালনা করতে ব্যবহৃত হয়। এই গাইডে আপনি শিখবেন কীভাবে Ubuntu সার্ভারে MySQL ইনস্টল, সিকিউর এবং ম্যানেজ করবেন — এবং কীভাবে এটি PHP অ্যাপ্লিকেশনের সঙ্গে যুক্ত করবেন।
 
 ---
 
-## 2. Installing MySQL on Ubuntu
+## 🧠 ১. MySQL কী?
 
-Update packages:
+MySQL একটি **ওপেন-সোর্স RDBMS**, যা আপনাকে দেয়:
+
+- টেবিল আকারে তথ্য (structured data) সংরক্ষণ  
+- SQL (Structured Query Language) ব্যবহার করে তথ্য অনুসন্ধান  
+- PHP, Laravel, WordPress ইত্যাদি ওয়েব অ্যাপ্লিকেশনের সঙ্গে কানেকশন  
+- একাধিক ইউজার ও তাদের অনুমতি (privileges) ম্যানেজ করার সুবিধা  
+
+---
+
+## ⚙️ ২. Ubuntu তে MySQL ইনস্টল করা
+
+প্রথমে প্যাকেজ আপডেট করুন:
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
-````
+```
 
-Install MySQL server:
+তারপর MySQL ইনস্টল করুন:
 
 ```bash
 sudo apt install mysql-server -y
 ```
 
-Check status:
+ইনস্টল শেষ হলে সার্ভিসের স্ট্যাটাস দেখুন:
 
 ```bash
 sudo systemctl status mysql
@@ -38,43 +38,43 @@ sudo systemctl status mysql
 
 ---
 
-## 3. Securing MySQL Installation
+## 🔐 ৩. MySQL ইনস্টলেশন সিকিউর করা
 
-Run the security script:
+নিচের কমান্ড চালান:
 
 ```bash
 sudo mysql_secure_installation
 ```
 
-You will be prompted to:
+এরপর কিছু প্রশ্ন আসবে — নিচের মতো উত্তর দিন:
 
-1. Set a root password (if not already set)
-2. Remove anonymous users → Press **y**
-3. Disallow remote root login → Press **y**
-4. Remove test database → Press **y**
-5. Reload privilege tables → Press **y**
+1. Root পাসওয়ার্ড সেট করুন (যদি আগে না করা থাকে)  
+2. Anonymous ইউজার মুছে ফেলুন → **y**  
+3. Remote root লগইন বন্ধ করুন → **y**  
+4. Test ডাটাবেস রিমুভ করুন → **y**  
+5. Privilege টেবিল রিলোড করুন → **y**  
 
-This ensures your MySQL server is production-ready.
+এতে আপনার MySQL সার্ভার প্রোডাকশন ব্যবহারের জন্য সুরক্ষিত হবে ✅
 
 ---
 
-## 4. Basic MySQL Commands
+## 🧩 ৪. MySQL এর বেসিক কমান্ডসমূহ
 
-### Logging in as root
+### 🧑‍💻 Root হিসেবে লগইন
 
 ```bash
 sudo mysql -u root -p
 ```
 
-Enter your root password when prompted.
+পাসওয়ার্ড দিলে MySQL CLI তে প্রবেশ করবেন।
 
-### Creating a Database
+### 🗄️ নতুন ডাটাবেস তৈরি
 
 ```sql
 CREATE DATABASE myapp;
 ```
 
-### Creating a User and Granting Privileges
+### 👤 নতুন ইউজার তৈরি ও পারমিশন দেওয়া
 
 ```sql
 CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';
@@ -82,19 +82,19 @@ GRANT ALL PRIVILEGES ON myapp.* TO 'myuser'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-### Listing Databases
+### 📋 ডাটাবেসের তালিকা দেখা
 
 ```sql
 SHOW DATABASES;
 ```
 
-### Selecting a Database
+### 📂 নির্দিষ্ট ডাটাবেস সিলেক্ট করা
 
 ```sql
 USE myapp;
 ```
 
-### Creating Tables
+### 🧱 টেবিল তৈরি করা
 
 ```sql
 CREATE TABLE users (
@@ -106,26 +106,27 @@ CREATE TABLE users (
 );
 ```
 
-### Inserting Data
+### ➕ ডাটা ইনসার্ট করা
 
 ```sql
-INSERT INTO users (name, email, password) VALUES ('Rabiul', 'rabiul@example.com', 'hashedpassword');
+INSERT INTO users (name, email, password)
+VALUES ('Rabiul', 'rabiul@example.com', 'hashedpassword');
 ```
 
-### Querying Data
+### 🔍 ডাটা দেখা
 
 ```sql
 SELECT * FROM users;
 SELECT name, email FROM users WHERE id = 1;
 ```
 
-### Updating Data
+### ✏️ ডাটা আপডেট করা
 
 ```sql
 UPDATE users SET name='Rabiul Ahmed' WHERE id=1;
 ```
 
-### Deleting Data
+### ❌ ডাটা ডিলিট করা
 
 ```sql
 DELETE FROM users WHERE id=1;
@@ -133,9 +134,9 @@ DELETE FROM users WHERE id=1;
 
 ---
 
-## 5. Connecting PHP with MySQL
+## 🔗 ৫. PHP এর সঙ্গে MySQL কানেক্ট করা
 
-Use **mysqli** or **PDO** in PHP:
+PHP-তে **mysqli** বা **PDO** ব্যবহার করা যায়। নিচে `mysqli` উদাহরণ দেখানো হলো:
 
 ```php
 <?php
@@ -144,10 +145,10 @@ $username = "myuser";
 $password = "mypassword";
 $database = "myapp";
 
-// Create connection
+// কানেকশন তৈরি
 $conn = new mysqli($servername, $username, $password, $database);
 
-// Check connection
+// কানেকশন চেক
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -157,15 +158,15 @@ echo "Connected successfully";
 
 ---
 
-## 6. Backup and Restore
+## 💾 ৬. ব্যাকআপ ও রিস্টোর
 
-### Backup a database
+### 📦 ডাটাবেস ব্যাকআপ করা
 
 ```bash
 mysqldump -u myuser -p myapp > myapp_backup.sql
 ```
 
-### Restore a database
+### 🔄 ডাটাবেস রিস্টোর করা
 
 ```bash
 mysql -u myuser -p myapp < myapp_backup.sql
@@ -173,15 +174,13 @@ mysql -u myuser -p myapp < myapp_backup.sql
 
 ---
 
-## 7. Summary
+## ✅ ৭. সারাংশ
 
-MySQL is essential for storing data in web applications. By mastering:
+MySQL হলো ওয়েব অ্যাপ্লিকেশনের ডাটা সংরক্ষণের সবচেয়ে নির্ভরযোগ্য মাধ্যমগুলোর একটি। আপনি যদি নিচের বিষয়গুলো আয়ত্ত করেন —
 
-* Database and user creation
-* CRUD operations (Create, Read, Update, Delete)
-* Connecting with PHP
-* Backup and restore
+- ডাটাবেস ও ইউজার তৈরি  
+- CRUD (Create, Read, Update, Delete) অপারেশন  
+- PHP এর সঙ্গে কানেকশন  
+- ব্যাকআপ ও রিস্টোর  
 
-…you can confidently manage the data layer for your web projects.
-
-```
+তাহলে সহজেই নিজের ওয়েব অ্যাপ্লিকেশনের ডাটাবেস ম্যানেজ করতে পারবেন 🚀
