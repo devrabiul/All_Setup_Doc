@@ -517,3 +517,12 @@ APP_HOST_DOMAIN=
 APP_HOST_BASE_DOMAIN=
 APP_PUBLIC_IP=
 ```
+
+
+```bash
+ docker compose exec app sed -i -e 's|^APP_HOST_DOMAIN=.*|APP_HOST_DOMAIN=|' \                                                                                                                                                                            
+    -e 's|^APP_HOST_BASE_DOMAIN=.*|APP_HOST_BASE_DOMAIN=|' \                                                                                                                                                                                               
+    -e 's|^FORCE_HTTPS=.*|FORCE_HTTPS=false|' \                                                                                                                                                                                                            
+    -e 's|^APP_URL=.*|APP_URL=http://localhost:8300|' .env                                                                                                                                                                                                 
+  docker compose restart app
+```
