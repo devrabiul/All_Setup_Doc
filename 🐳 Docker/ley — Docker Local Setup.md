@@ -454,3 +454,66 @@ docker compose down -v            # কন্টেইনার এবং দু
 docker image rm 6valley-default-app:latest
 docker compose up -d --build
 ```
+
+
+## Env File
+```bash
+APP_NAME=6valley-default
+APP_ENV=local
+APP_KEY=base64:1vaU3dfc+sWjx8TuDXzginRsEa2dp2SBL+Ujs6QCb5c=
+APP_DEBUG=false
+APP_MODE=demo
+APP_URL=http://localhost:8300
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=database1
+DB_USERNAME=6valley_user
+DB_PASSWORD=Te?tu2)gs4=q(oz?rT5!oz
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+QUEUE_CONNECTION=database
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+AWS_ENDPOINT=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+NEXMO_KEY=
+NEXMO_SECRET=
+PURCHASE_CODE=
+BUYER_USERNAME=
+SOFTWARE_ID=MzE0NDg1OTc=
+SOFTWARE_VERSION=16.5
+WEB_THEME=default
+
+#docker configs
+APP_PORT=8300
+CONTAINER_NAME_PREFIX=6valley-default
+COMPOSE_PROJECT_NAME=6valley-default
+FORCE_HTTPS=false
+
+LOG_CHANNEL=single
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+# The single hostname where the admin/vendor panel + all host routes live.
+# Sub-domains and custom domains in tenant_domain_configs serve the
+# storefront at root. Leave both unset for single-tenant / legacy installs.
+APP_HOST_DOMAIN=
+APP_HOST_BASE_DOMAIN=
+APP_PUBLIC_IP=
+```
